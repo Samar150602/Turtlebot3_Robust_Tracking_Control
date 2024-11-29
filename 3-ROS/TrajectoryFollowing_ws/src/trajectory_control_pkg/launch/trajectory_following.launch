@@ -1,0 +1,23 @@
+<launch>
+
+    <!-- Gazebo Simulation -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="true"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="false"/>
+    </include>
+
+    <!-- Spawing Robot -->
+    <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_burger_for_autorace_2020.urdf.xacro " />
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model turtlebot3_burger -x 0 -y 0 -z 0.0 -Y -1 -param robot_description" />
+
+    <!-- Robot Control  -->
+    <!-- <node pkg="trajectory_control_pkg" type="robot_movement.py" name="straight_movement_node" output = "screen" /> -->
+    <!-- <node pkg="trajectory_control_pkg" type="robot_circle.py" name="circular_movement_node" output = "screen" /> -->
+    <!-- <node pkg="trajectory_control_pkg" type="robot_8_shape.py" name="shape_8_movement_node" output = "screen" /> -->
+    <!-- <node pkg="trajectory_control_pkg" type="FBTC_8_shape.py" name="shape_8_FBTC_node" output = "screen" /> -->
+    <node pkg="trajectory_control_pkg" type="FBSMC_8_shape.py" name="shape_8_FBSMC_node" output = "screen" />
+
+</launch>
